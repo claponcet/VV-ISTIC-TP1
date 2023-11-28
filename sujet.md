@@ -11,3 +11,41 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+### Question 1
+
+Source : https://www.tf1info.fr/conso-argent/video-impots-bruno-le-maire-reconnait-un-bug-sur-la-taxe-d-habitation-comment-des-avis-ont-ils-pu-etre-envoyes-a-des-enfants-2277135.html
+This article describes a bug that happened a few days ago. People started receiving invoices for French residence taxes even though they were not eligible.
+The government commented on this issue, stating that it was a software anomaly.
+This bug has had little repercussions. The public administration (DGFIP) stated that millions of people had been affected across France but that they would get a refund if they had already paid.
+While this bug did not have any major economical repercussion, it tarnished the public image of the institution.
+According to us, this bug could have been easily avoided with proper testing as this specific tax no longer exists and should have never been sent out.
+
+### Question 2
+
+We have chosen the following issue: [COLLECTIONS-796](https://issues.apache.org/jira/browse/COLLECTIONS-796?jql=project%20%3D%20COLLECTIONS%20AND%20statusCategory%20%3D%20Done%20AND%20type%20%3D%20Bug%20%20ORDER%20BY%20updated%20DESC). The `SetUniqueList` class is an implementation of the `Set` interface which is designed to store ordered elements. The `createSetBasedOnList` method takes a `Set` and a `List` as arguments and returns a new `Set` containing the elements of the `List` argument. The returned `Set` is the same type as the input `Set` argument (e.g., `HashSet`, `TreeSet`, etc…).
+This issue was created because the method would always return an empty `Set`. This was easily fixed with the addition of an omitted line of code.
+
+```{java}
+protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {
+    Set<E> subSet;
+    if (set.getClass().equals(HashSet.class)) {
+        subSet = new HashSet<>(list.size());
+    } else {
+        try {
+            subSet = set.getClass().newInstance();
+        } catch (final InstantiationException ie) {
+            subSet = new HashSet<>();
+        } catch (final IllegalAccessException iae) {
+            subSet = set.getClass().getDeclaredConstructor(set.getClass()).newInstance(set);
+        } catch (final InstantiationException
+                | IllegalAccessException
+                | InvocationTargetException
+                | NoSuchMethodException ie) {
+            subSet = new HashSet<>();
+        }
+    }
+    subSet.addAll(list);
+    return subSet;
+}
+```
