@@ -26,7 +26,7 @@ According to us, this bug could have been easily avoided with proper testing as 
 We have chosen the following issue: [COLLECTIONS-796](https://issues.apache.org/jira/browse/COLLECTIONS-796?jql=project%20%3D%20COLLECTIONS%20AND%20statusCategory%20%3D%20Done%20AND%20type%20%3D%20Bug%20%20ORDER%20BY%20updated%20DESC). The `SetUniqueList` class is an implementation of the `Set` interface which is designed to store ordered elements. The `createSetBasedOnList` method takes a `Set` and a `List` as arguments and returns a new `Set` containing the elements of the `List` argument. The returned `Set` is the same type as the input `Set` argument (e.g., `HashSet`, `TreeSet`, etc…).
 This issue was created because the method would always return an empty `Set`. This was easily fixed with the addition of an omitted line of code.
 
-```{java}
+```java
 protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {
     Set<E> subSet;
     if (set.getClass().equals(HashSet.class)) {
