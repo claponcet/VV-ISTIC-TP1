@@ -58,5 +58,12 @@ protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {
 This is a local bug since the implementation of the method did not meet the specification's requirements as it would always return an empty `Set` or throw an exception.
 No new tests were added since the missing line had been deleted by mistake at some point so the tests probably already existed.
 
-## Question 3
+### Question 3
 
+These experiments aim at comparing a distributed service in a steady state and the same service in a disrupted state where the optimal running conditions are not met. 
+The first requirement is to define what the "steady state" should be and how the service should behave in this state.
+Then we inject variables to simulate real life events such as a server crash, a hard drive failure or a network malfunction to see how the service reacts (ideally, it handles those events as gracefully as possible for the end user). 
+They use the "starts per second" variable to measure the availability of content during these events and ensure that the end users are not impacted by them and are able to watch content as they normally would.
+The two different outcomes of these experiments are either an increased confidence in the system if the tests have been successful, or vulnerability detection if the tests failed. Either way, running this type of tests is a very positive action.
+Other companies (mostly GAFAM) use similar techniques to test the resilience of their services.
+Theoretically, any service provider that has several physical servers could use this kind of tests. We could simulate the crash of a server and see if the other ones are still serving content to the clients. We could simply monitor the load on each remaining server during the experiment to make sure the end users are not affected by the crash (no noticeable slowdowns for the users, no timeout or unavailable content, etc.).
