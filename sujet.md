@@ -67,3 +67,9 @@ They use the "starts per second" variable to measure the availability of content
 The two different outcomes of these experiments are either an increased confidence in the system if the tests have been successful, or vulnerability detection if the tests failed. Either way, running this type of tests is a very positive action.
 Other companies (mostly GAFAM) use similar techniques to test the resilience of their services.
 Theoretically, any service provider that has several physical servers could use this kind of tests. We could simulate the crash of a server and see if the other ones are still serving content to the clients. We could simply monitor the load on each remaining server during the experiment to make sure the end users are not affected by the crash (no noticeable slowdowns for the users, no timeout or unavailable content, etc.).
+
+### Question 4
+
+Read the paper and explain what are the main advantages of having a formal specification for WebAssembly. In your opinion, does this mean that WebAssembly implementations should not be tested?
+
+WebAssembly being fully specified makes it easier to validate code before running it since the semantics of the language are clearly bounded by simple rules (unlike JavaScript which has dynamic typing for example). Testing is still required as the implementation of the specification may be wrong or not exhaustive.
