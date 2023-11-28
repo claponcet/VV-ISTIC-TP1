@@ -10,6 +10,12 @@
 
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
+---
+
+PONCET Clara
+LE COANT Etienne
+G2 M2 ILa
+
 ## Answers
 
 ### Question 1
@@ -24,7 +30,7 @@ According to us, this bug could have been easily avoided with proper testing as 
 ### Question 2
 
 We have chosen the following issue: [COLLECTIONS-796](https://issues.apache.org/jira/browse/COLLECTIONS-796?jql=project%20%3D%20COLLECTIONS%20AND%20statusCategory%20%3D%20Done%20AND%20type%20%3D%20Bug%20%20ORDER%20BY%20updated%20DESC). The `SetUniqueList` class is an implementation of the `Set` interface which is designed to store ordered elements. The `createSetBasedOnList` method takes a `Set` and a `List` as arguments and returns a new `Set` containing the elements of the `List` argument. The returned `Set` is the same type as the input `Set` argument (e.g., `HashSet`, `TreeSet`, etc…).
-This issue was created because the method would always return an empty `Set`. This was easily fixed with the addition of an omitted line of code (`subSet.addAll(list)` before the return statement).
+This issue was created because the method would always return an empty `Set`. This was easily fixed with the addition of a missing line of code (`subSet.addAll(list)` before the return statement).
 
 ```java
 protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {
@@ -49,3 +55,8 @@ protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {
     return subSet;
 }
 ```
+This is a local bug since the implementation of the method did not meet the specification's requirements as it would always return an empty `Set` or throw an exception.
+No new tests were added since the missing line had been deleted by mistake at some point so the tests probably already existed.
+
+## Question 3
+
