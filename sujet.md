@@ -73,3 +73,9 @@ Theoretically, any service provider that has several physical servers could use 
 Read the paper and explain what are the main advantages of having a formal specification for WebAssembly. In your opinion, does this mean that WebAssembly implementations should not be tested?
 
 WebAssembly being fully specified makes it easier to validate code before running it since the semantics of the language are clearly bounded by simple rules (unlike JavaScript which has dynamic typing for example). Testing is still required as the implementation of the specification may be wrong or not exhaustive.
+
+### Question 5
+
+According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing
+
+- See 'Exception handling'
